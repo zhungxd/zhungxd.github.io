@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ReactiveCocoa实践（一） | Zhung</title>
+  <title>ReactiveCocoa实践（一） | Zhungxd&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="ReactiveCocoa(以下简称RAC)是iOS上函数响应式编程（Functional Reactive Programming，FRP）的框架，这个和我们平时面向对象（OOP）的编程方式有挺大的区别。本文通过在项目中使用RAC来实现一个小功能，让大家了解一下RAC。
 Introduction有一个需求，在搜索页搜索时，需要先判断输入内容是否合法（2个字符以上），同时需要500毫秒的延迟，减少">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ReactiveCocoa实践（一）">
 <meta property="og:url" content="http://zhungxd.github.io/2016/04/12/ReactiveCocoa实践（一）/index.html">
-<meta property="og:site_name" content="Zhung">
+<meta property="og:site_name" content="Zhungxd's Blog">
 <meta property="og:description" content="ReactiveCocoa(以下简称RAC)是iOS上函数响应式编程（Functional Reactive Programming，FRP）的框架，这个和我们平时面向对象（OOP）的编程方式有挺大的区别。本文通过在项目中使用RAC来实现一个小功能，让大家了解一下RAC。
 Introduction有一个需求，在搜索页搜索时，需要先判断输入内容是否合法（2个字符以上），同时需要500毫秒的延迟，减少">
 <meta property="og:updated_time" content="2016-04-12T07:05:24.000Z">
@@ -19,7 +19,7 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
 <meta name="twitter:description" content="ReactiveCocoa(以下简称RAC)是iOS上函数响应式编程（Functional Reactive Programming，FRP）的框架，这个和我们平时面向对象（OOP）的编程方式有挺大的区别。本文通过在项目中使用RAC来实现一个小功能，让大家了解一下RAC。
 Introduction有一个需求，在搜索页搜索时，需要先判断输入内容是否合法（2个字符以上），同时需要500毫秒的延迟，减少">
   
-    <link rel="alternate" href="/atom.xml" title="Zhung" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Zhungxd&#39;s Blog" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -40,8 +40,12 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Zhung</a>
+        <a href="/" id="logo">Zhungxd&#39;s Blog</a>
       </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Code Blog</a>
+        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -57,7 +61,7 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://zhungxd.github.io"></form>
@@ -116,7 +120,7 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhungxd.github.io/2016/04/12/ReactiveCocoa实践（一）/" data-id="cioe3dez10000o2srd4xxeut1" class="article-share-link">Share</a>
+      <a data-url="http://zhungxd.github.io/2016/04/12/ReactiveCocoa实践（一）/" data-id="ciof6g0gl00005ksrmjqy4pim" class="article-share-link">Delen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ReactiveCocoa/">ReactiveCocoa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
@@ -134,7 +138,7 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Kategorier</h3>
+    <h3 class="widget-title">Categorieën</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
     </div>
@@ -144,7 +148,7 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Labels</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactiveCocoa/">ReactiveCocoa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
     </div>
@@ -163,7 +167,7 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Arkiv</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
     </div>
@@ -173,7 +177,7 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Siste innlegg</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         

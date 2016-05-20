@@ -1,4 +1,4 @@
-title: ReactiveCocoa实践（一）
+title: ReactiveCocoa实践
 date: 2016-04-12 11:57:32
 author: zhungxd
 tags:
@@ -76,4 +76,4 @@ RAC中最核心的类RACSignal，是一系列可以被监测的数据流。
 
 -------------
 
-Written by 饿了么iOS组 － [zhungxd](https://github.com/zhungxd)
+Written by zhungxd － [zhungxd](https://github.com/zhungxd)

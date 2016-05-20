@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Zhungxd&#39;s Blog</title>
+  <title>ReactiveCocoa实践 | Zhungxd&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Learn More">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhungxd's Blog">
-<meta property="og:url" content="http://zhungxd.github.io/index.html">
+  <meta name="description" content="ReactiveCocoa(以下简称RAC)是iOS上函数响应式编程（Functional Reactive Programming，FRP）的框架，这个和我们平时面向对象（OOP）的编程方式有挺大的区别。本文通过在项目中使用RAC来实现一个小功能，让大家了解一下RAC。
+Introduction有一个需求，在搜索页搜索时，需要先判断输入内容是否合法（2个字符以上），同时需要500毫秒的延迟，减少">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactiveCocoa实践">
+<meta property="og:url" content="http://zhungxd.github.io/2016/04/12/ReactiveCocoa实践/index.html">
 <meta property="og:site_name" content="Zhungxd's Blog">
-<meta property="og:description" content="Learn More">
+<meta property="og:description" content="ReactiveCocoa(以下简称RAC)是iOS上函数响应式编程（Functional Reactive Programming，FRP）的框架，这个和我们平时面向对象（OOP）的编程方式有挺大的区别。本文通过在项目中使用RAC来实现一个小功能，让大家了解一下RAC。
+Introduction有一个需求，在搜索页搜索时，需要先判断输入内容是否合法（2个字符以上），同时需要500毫秒的延迟，减少">
+<meta property="og:updated_time" content="2016-05-20T03:40:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zhungxd's Blog">
-<meta name="twitter:description" content="Learn More">
+<meta name="twitter:title" content="ReactiveCocoa实践">
+<meta name="twitter:description" content="ReactiveCocoa(以下简称RAC)是iOS上函数响应式编程（Functional Reactive Programming，FRP）的框架，这个和我们平时面向对象（OOP）的编程方式有挺大的区别。本文通过在项目中使用RAC来实现一个小功能，让大家了解一下RAC。
+Introduction有一个需求，在搜索页搜索时，需要先判断输入内容是否合法（2个字符以上），同时需要500毫秒的延迟，减少">
   
     <link rel="alternate" href="/atom.xml" title="Zhungxd&#39;s Blog" type="application/atom+xml">
   
@@ -66,55 +70,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-Masonry小技巧" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/19/Masonry小技巧/" class="article-date">
-  <time datetime="2016-05-19T09:12:03.000Z" itemprop="datePublished">2016-05-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/19/Masonry小技巧/">Masonry小技巧</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>当你写了一个错误的constanints，例如:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[self.statusLabel mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">make.top.equalTo(self.contentView).offset(15.0f);</span><br><span class="line">make.left.equalTo(self.contentView).offset(10.f);</span><br><span class="line">make.height.equalTo(10);</span><br><span class="line">make.bottom.equalTo(self.contentView);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p>然后在你会看到如下的debug log:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Probably at least one of the constraints in the following list is one you don&apos;t want. Try this: </span><br><span class="line">(1) look at each constraint and try to figure out which you don&apos;t expect; </span><br><span class="line">(2) find the code that added the unwanted constraint or constraints and fix it. </span><br><span class="line">(Note: If you&apos;re seeing NSAutoresizingMaskLayoutConstraints that you don&apos;t understand, </span><br><span class="line">refer to the documentation for the UIView property translatesAutoresizingMaskIntoConstraints)</span><br><span class="line">(</span><br><span class="line">&quot;&lt;MASLayoutConstraint:0x1704a9b40 UILabel:0x12fde1c10.top == UITableViewCellContentView:0x12fdde840.top + 15&gt;&quot;,</span><br><span class="line">&quot;&lt;MASLayoutConstraint:0x1704a9c00 UILabel:0x12fde1c10.height == 10&gt;&quot;,</span><br><span class="line">&quot;&lt;MASLayoutConstraint:0x1704a9c60 UILabel:0x12fde1c10.bottom == UITableViewCellContentView:0x12fdde840.bottom&gt;&quot;,</span><br><span class="line">&quot;&lt;NSLayoutConstraint:0x17429fae0 UITableViewCellContentView:0x12fdde840.height == 177.5&gt;&quot;</span><br><span class="line">)</span><br><span class="line">Will attempt to recover by breaking constraint</span><br><span class="line">&lt;MASLayoutConstraint:0x1704a9c00 UILabel:0x12fde1c10.height == 10&gt;</span><br><span class="line">Make a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.</span><br><span class="line">The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.</span><br></pre></td></tr></table></figure></p>
-<p>是不是会眼花，如果有很多label你是不是需要找半天。<br>现在你只需要加上一句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.statusLabel = [UILabel new];</span><br><span class="line">[self.contentView addSubview:self.statusLabel];</span><br><span class="line">MASAttachKeys(self.statusLabel);</span><br></pre></td></tr></table></figure></p>
-<p>只要加一句，不需要￥998</p>
-<p>然后log会变成这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(</span><br><span class="line">&quot;&lt;MASLayoutConstraint:0x1704a4980 UILabel:self.statusLabel.top == UITableViewCellContentView:0x147f046f0.top + 15&gt;&quot;,</span><br><span class="line">&quot;&lt;MASLayoutConstraint:0x1704a4a40 UILabel:self.statusLabel.height == 10&gt;&quot;,</span><br><span class="line">&quot;&lt;MASLayoutConstraint:0x1704a4aa0 UILabel:self.statusLabel.bottom == UITableViewCellContentView:0x147f046f0.bottom&gt;&quot;,</span><br><span class="line">&quot;&lt;NSLayoutConstraint:0x170496080 UITableViewCellContentView:0x147f046f0.height == 177.5&gt;&quot;</span><br><span class="line">)</span><br><span class="line">Will attempt to recover by breaking constraint</span><br><span class="line">&lt;MASLayoutConstraint:0x1704a4a40 UILabel:self.statusLabel.height == 10&gt;</span><br></pre></td></tr></table></figure></p>
-<p>是不是很清楚，一看就知道错在哪里。</p>
-<p>同理，如果你没有用Masonry，而只是用系统的autolayout API，可以试试NSLayoutConstraint的identifier来让你的debug log更易读。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhungxd.github.io/2016/05/19/Masonry小技巧/" data-id="ciof6jjzv000076srcpje99xx" class="article-share-link">Поделиться</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ReactiveCocoa实践" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-ReactiveCocoa实践" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/04/12/ReactiveCocoa实践/" class="article-date">
   <time datetime="2016-04-12T03:57:32.000Z" itemprop="datePublished">2016-04-12</time>
@@ -131,8 +87,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/12/ReactiveCocoa实践/">ReactiveCocoa实践</a>
+    <h1 class="article-title" itemprop="name">
+      ReactiveCocoa实践
     </h1>
   
 
@@ -172,10 +128,23 @@
     </footer>
   </div>
   
-</article>
-
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/19/Masonry小技巧/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Следующий</strong>
+      <div class="article-nav-title">
+        
+          Masonry小技巧
+        
+      </div>
+    </a>
+  
+  
+</nav>
 
   
+</article>
 
 </section>
         

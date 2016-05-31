@@ -13,7 +13,7 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
 <meta property="og:site_name" content="zhungxd's Blog">
 <meta property="og:description" content="ReactiveCocoa(以下简称RAC)是iOS上函数响应式编程（Functional Reactive Programming，FRP）的框架，这个和我们平时面向对象（OOP）的编程方式有挺大的区别。本文通过在项目中使用RAC来实现一个小功能，让大家了解一下RAC。
 Introduction有一个需求，在搜索页搜索时，需要先判断输入内容是否合法（2个字符以上），同时需要500毫秒的延迟，减少">
-<meta property="og:updated_time" content="2016-05-20T03:40:43.000Z">
+<meta property="og:updated_time" content="2016-05-31T02:27:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ReactiveCocoa实践">
 <meta name="twitter:description" content="ReactiveCocoa(以下简称RAC)是iOS上函数响应式编程（Functional Reactive Programming，FRP）的框架，这个和我们平时面向对象（OOP）的编程方式有挺大的区别。本文通过在项目中使用RAC来实现一个小功能，让大家了解一下RAC。
@@ -115,7 +115,6 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
 <h1 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h1><p>当然由于block的循环引用，我们必须像往常一样使用weakSelf，strongSelf。RAC在RACEXTScope.h中定义了 <code>@weakify()</code> 和 <code>@strongify()</code> 来方便我们使用。<code>@weakify()</code>实际上定义了一个_weak的<code>self_weak_</code> 变量，而<code>@strongify()</code>则在block定义了一个指向<code>self_weak_</code>的_strong的self指针。最终代码：</p>
 <figure class="highlight objectivec"><figcaption><span>Final Code</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@weakify(<span class="keyword">self</span>);</span><br><span class="line">[[[RACObserve(<span class="keyword">self</span>, searchText)</span><br><span class="line">   filter:^<span class="built_in">BOOL</span>(<span class="built_in">NSString</span> *text) &#123;</span><br><span class="line">     <span class="keyword">return</span> text.length &gt; <span class="number">2</span>;</span><br><span class="line">   &#125;]</span><br><span class="line">  throttle:<span class="number">0.5</span>]</span><br><span class="line"> subscribeNext:^(<span class="built_in">NSString</span> *searchText) &#123;</span><br><span class="line">   @strongify(<span class="keyword">self</span>);</span><br><span class="line">   [<span class="keyword">self</span> search:searchText];</span><br><span class="line"> &#125;]</span><br></pre></td></tr></table></figure>
 <hr>
-<p>Written by zhungxd － <a href="https://github.com/zhungxd" target="_blank" rel="external">zhungxd</a></p>
 
       
     </div>
@@ -164,7 +163,7 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactiveCocoa/">ReactiveCocoa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactiveCocoa/">ReactiveCocoa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
     </div>
   </div>
 
@@ -174,7 +173,7 @@ Introduction有一个需求，在搜索页搜索时，需要先判断输入内�
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a>
+      <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
   </div>
 

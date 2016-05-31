@@ -75,5 +75,3 @@ RAC中最核心的类RACSignal，是一系列可以被监测的数据流。
 {% endcodeblock %}
 
 -------------
-
-Written by zhungxd － [zhungxd](https://github.com/zhungxd)

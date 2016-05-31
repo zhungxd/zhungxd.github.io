@@ -1,6 +1,10 @@
 title: Masonry小技巧
 date: 2016-05-19 17:12:03
-tags: ios
+author: zhungxd
+tags:
+- iOS
+- ReactiveCocoa
+category: iOS
 ---
 
 当你写了一个错误的constanints，例如:
